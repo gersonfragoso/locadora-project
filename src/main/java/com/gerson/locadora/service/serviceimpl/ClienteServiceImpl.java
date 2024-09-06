@@ -14,8 +14,7 @@ public class ClienteServiceImpl implements ClienteService {
     @Autowired
     private ClienteRepository clienteRepository;
 
-    @Autowired
-    private ClienteMapper clienteMapper;
+
 
     @Override
     public ClienteDTO createCliente(Cliente cliente) {
@@ -48,6 +47,12 @@ public class ClienteServiceImpl implements ClienteService {
         Cliente clienteExistente = clienteRepository.findByCpf(cpf)
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado com o CPF: " + cpf));
         clienteRepository.delete(clienteExistente);
+        return ClienteMapper.clienteToDTO(clienteExistente);
+    }
+    @Override
+    public ClienteDTO findByCpf(String cpf){
+        Cliente clienteExistente = clienteRepository.findByCpf(cpf)
+                .orElseThrow(() -> new RuntimeException("Cliente não encontrado com o CPF: " + cpf));
         return ClienteMapper.clienteToDTO(clienteExistente);
     }
 }

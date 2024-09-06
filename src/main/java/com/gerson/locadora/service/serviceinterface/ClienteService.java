@@ -7,4 +7,5 @@ public interface ClienteService {
     ClienteDTO createCliente(Cliente cliente);
     ClienteDTO updateCliente(Cliente cliente);
     ClienteDTO deleteCliente(String cpf);
+    ClienteDTO findByCpf(String cpf);
 }
