@@ -7,7 +7,7 @@ public class AdminMapper {
         return new AdminDTO(
                 admin.getId(),
                 admin.getName(),
-                admin.getIdade(),
+                admin.getDataNascimento(),
                 admin.getEmail(),
                 admin.getCpf(),
                 admin.getSenha(),

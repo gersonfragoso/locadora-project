@@ -7,7 +7,7 @@ public class ClienteMapper {
         return new ClienteDTO(
                 cliente.getId(),
                 cliente.getName(),
-                cliente.getIdade(),
+                cliente.getDataNascimento(),
                 cliente.getEmail(),
                 cliente.getCpf(),
                 cliente.getSenha(),
