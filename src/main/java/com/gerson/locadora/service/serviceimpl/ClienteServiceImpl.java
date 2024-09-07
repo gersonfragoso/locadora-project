@@ -8,6 +8,8 @@ import com.gerson.locadora.service.serviceinterface.ClienteService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 public class ClienteServiceImpl implements ClienteService {
 
@@ -18,6 +20,9 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public ClienteDTO createCliente(Cliente cliente) {
+        VerificaCliente(clienteRepository.findByCpf(cliente.getCpf()), "Cliente com este CPF já existe");
+        VerificaCliente(clienteRepository.findByEmail(cliente.getEmail()), "Cliente com este email já existe");
+        VerificaCliente(clienteRepository.findByCnh(cliente.getCnh()), "Cliente com esta CNH já existe");
         Cliente clienteSave = clienteRepository.save(cliente);
         return ClienteMapper.clienteToDTO(clienteSave);
     }
@@ -54,5 +59,10 @@ public class ClienteServiceImpl implements ClienteService {
         Cliente clienteExistente = clienteRepository.findByCpf(cpf)
                 .orElseThrow(() -> new RuntimeException("Cliente não encontrado com o CPF: " + cpf));
         return ClienteMapper.clienteToDTO(clienteExistente);
+    }
+    public <T> void VerificaCliente(Optional<T> entidadeOptional, String mensagemErro) {
+        if (entidadeOptional.isPresent()) {
+            throw new RuntimeException(mensagemErro);
+        }
     }
 }

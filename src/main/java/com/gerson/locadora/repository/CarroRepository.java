@@ -9,4 +9,5 @@ import java.util.Optional;
 @Repository
 public interface CarroRepository extends JpaRepository<Carro,Long> {
     Optional<Carro> findByPlaca(String placa);
+    Optional<Carro> findByChassi(String chassi);
 }

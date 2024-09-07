@@ -36,7 +36,8 @@ public class CarroServiceImpl implements CarroService{
                     }
                 })
                 .collect(Collectors.toList());
-
+        verificaCarro(carroRepository.findByChassi(carroDTO.chassi()),"Ja existe um carro com o chassi informado");
+        verificaCarro(carroRepository.findByPlaca(carroDTO.placa()),"Ja existe um carro com a placa informado");
         Carro carro = new Carro();
         carro.setModelo(carroDTO.modelo());
         carro.setPlaca(carroDTO.placa());
@@ -71,6 +72,11 @@ public class CarroServiceImpl implements CarroService{
         }
         Carro carroAtualizado = carroRepository.save(carroExistente);
         return CarroMapper.carroToDTO(carroAtualizado);
+    }
+    public <T> void verificaCarro(Optional<T> entidadeOptional, String mensagemErro) {
+        if (entidadeOptional.isPresent()) {
+            throw new RuntimeException(mensagemErro);
+        }
     }
 
 }
